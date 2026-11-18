@@ -6,10 +6,7 @@ import {
   deliveryOption,
   getDeliveryOption,
 } from "../../data/deliveryOptions.js";
-
-const today = dayjs();
-const deliveryDate = today.add(7, "days");
-console.log(deliveryDate.format("dddd, MMMM, D"));
+import { renderPaymentSummary } from "./paymentsummary.js";
 
 export function renderOrderSummary() {
   let cartSummaryHTML = "";
@@ -111,6 +108,8 @@ export function renderOrderSummary() {
       );
 
       container.remove();
+
+      renderPaymentSummary();
     });
   });
 
@@ -119,6 +118,8 @@ export function renderOrderSummary() {
       const { productId, deliveryOptionId } = element.dataset;
       updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
+
+      renderPaymentSummary();
     });
   });
 }
