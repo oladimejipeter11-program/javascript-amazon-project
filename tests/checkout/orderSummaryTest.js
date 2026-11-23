@@ -8,8 +8,10 @@ describe("test suite: renderOrderSummary", () => {
   beforeEach(() => {
     spyOn(localStorage, "setItem");
 
-    document.querySelector(".js-test-container").innerHTML =
-      '<div class="js-order-summary"></<div>';
+    document.querySelector(".js-test-container").innerHTML = `
+      <div class="js-order-summary"></div>
+      <div class="js-payment-summary"></div>
+    `;
 
     spyOn(localStorage, "getItem").and.callFake(() => {
       return JSON.stringify([
@@ -35,17 +37,17 @@ describe("test suite: renderOrderSummary", () => {
       2,
     );
     expect(
-      document.querySelector(".js-product-quantity-${productId1}").innerTest,
+      document.querySelector(`.js-product-quantity-${productId1}`).innerText,
     ).toContain("Quantity: 2");
     expect(
-      document.querySelector(".js-product-quantity-${productId1}").innerTest,
+      document.querySelector(`.js-product-quantity-${productId2}`).innerText,
     ).toContain("Quantity: 1");
 
     document.querySelector(".js-test-container").innerHTML = "";
   });
 
   it("remove a product", () => {
-    document.querySelector(".js-delete-link-${productId1}").click();
+    document.querySelector(`.js-delete-link-${productId1}`).click();
 
     expect(document.querySelectorAll(".js-cart-item-container").length).toEqual(
       1,
@@ -58,8 +60,8 @@ describe("test suite: renderOrderSummary", () => {
       document.querySelector(`.js-cart-item-container-${productId2}`),
     ).not.toEqual(null);
 
-    expect(cart.lenght).toEqual(1);
-    expect(cart[0].productId.toEqual(productId2));
+    expect(cart.length).toEqual(1);
+    expect(cart[0].productId).toEqual(productId2);
 
     document.querySelector(".js-test-container").innerHTML = "";
   });
