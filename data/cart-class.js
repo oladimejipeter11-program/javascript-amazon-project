@@ -1,13 +1,14 @@
 class Cart {
   cartItems;
-  loadFromStorageKey;
+  #loadFromStorageKey;
 
   constructor(localStoragekey) {
-    this.loadFromStorageKey = localStoragekey;
-    this.loadFromStorage();
+    this.#loadFromStorageKey = localStoragekey;
+    this.#loadFromStorage();
   }
-  loadFromStorage() {
-    this.cartItems = JSON.parse(localStorage.getItem(this.loadFromStorageKey));
+
+  #loadFromStorage() {
+    this.cartItems = JSON.parse(localStorage.getItem(this.#loadFromStorageKey));
 
     if (!this.cartItems) {
       this.cartItem = [
@@ -27,7 +28,7 @@ class Cart {
 
   saveToStorage() {
     localStorage.setItem(
-      this.loadFromStorageKey,
+      this.#loadFromStorageKey,
       JSON.stringify(this.cartItems),
     );
   }
